@@ -1,0 +1,20 @@
+{
+  "author": "Jesper Haug Karsrud <jesper.karsrud@gmail.com>",
+  "name": "runkeep-node",
+  "description": "Runkeeper API",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jkarsrud/runkeep-node.git"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": "~0.6.8"
+  },
+  "dependencies": {
+      "request":"2.9.100",
+      "underscore": "1.3.x"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {}
+}
