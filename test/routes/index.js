@@ -32,17 +32,29 @@ exports.index = function (req, res) {
 
 exports.authcallback = function (req, res) {
     var code = req.query.code;
-    var hg = new HealthGraph(opts);
+    req.session.code = code;
 
-    hg.getOAuthAccessToken(code, function (error, accessToken, refreshToken) {
-        if (error) {
-            res.send(error);
-        }
-        else {
-            req.session.accessToken = accessToken;
-            req.session.refreshToken = refreshToken;
+    res.redirect('/gettoken');
+};
 
-            res.render('callback', {title:'Authenticated', accessToken:req.session.accessToken, refreshToken: req.session.refreshToken});
-        }
-    });
+exports.gettoken = function (req, res) {
+    if (req.session.code) {
+        var code = req.session.code;
+        var hg = new HealthGraph(opts);
+
+        hg.getOAuthAccessToken(code, function (error, accessToken, refreshToken) {
+            if (error) {
+                res.send(error);
+            }
+            else {
+                req.session.accessToken = accessToken;
+                req.session.refreshToken = refreshToken;
+
+                res.render('callback', {title:'Authenticated', accessToken:req.session.accessToken, refreshToken:req.session.refreshToken});
+            }
+        });
+    }
+    else {
+        res.send("You need teh coadz!");
+    }
 };
